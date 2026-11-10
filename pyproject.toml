@@ -1,0 +1,44 @@
+[project]
+name = "kr-law-mcp"
+version = "0.1.0"
+description = "MCP server for Korean current statutes via the 국가법령정보센터 Open API"
+readme = "README.md"
+authors = [
+    { name = "xavierchae", email = "123035937+xavierchae@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp[cli]>=2.3.0",
+    "rapidfuzz>=3.14.6",
+]
+
+[project.scripts]
+kr-law-mcp = "kr_law_mcp.server:main"
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.4.1.post1",
+    "respx>=0.23.1",
+    "ruff>=0.17.4",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-m 'not live'"
+markers = ["live: calls the real law.go.kr API (needs LAW_OC and a registered IP)"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

@@ -1,0 +1,1 @@
+"""kr-law-mcp package."""
